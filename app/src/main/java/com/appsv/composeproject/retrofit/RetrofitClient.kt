@@ -9,5 +9,6 @@ val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())   // Use Gson to parse JSON
     .build()
 
+
 // Create an instance of the API service
-val apiService = retrofit.create(SportMonksApiService::class.java)
+//val apiService = retrofit.create(SportMonksApiService::class.java)
