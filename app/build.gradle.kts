@@ -7,13 +7,17 @@ plugins {
 android {
     namespace = "com.appsv.composeproject"
     compileSdk = 34
+    val googleClientId = project.hasProperty("GOOGLE_CLIENT_ID")
 
     defaultConfig {
         applicationId = "com.appsv.composeproject"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        buildConfigField("String", "GOOGLE_CLIENT_ID", "\"${googleClientId}\"")
+
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -69,8 +74,8 @@ dependencies {
 
     // translate ml kit
     implementation("com.google.mlkit:translate:17.0.3")
-    val latest_version ="1.3.0"
-    implementation("androidx.credentials:credentials:$latest_version")
-    implementation("androidx.credentials:credentials-play-services-auth:$latest_version")
-    implementation("com.google.android.libraries.identity.googleid:googleid:$latest_version")
+    val googleVersion ="1.1.1"
+    implementation("androidx.credentials:credentials:$googleVersion")
+    implementation("androidx.credentials:credentials-play-services-auth:$googleVersion")
+    implementation("com.google.android.libraries.identity.googleid:googleid:$googleVersion")
 }

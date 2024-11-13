@@ -5,16 +5,20 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.appsv.composeproject.cricket.CricketRankings
+import com.appsv.composeproject.google_sign_in.GoogleCredSignIn
 import com.appsv.composeproject.mlkit.translation.TranslationScreen
 import com.appsv.composeproject.retrofit.retrofit
 import com.appsv.composeproject.ui.theme.ComposeProjectTheme
@@ -26,12 +30,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : ComponentActivity() {
+    private lateinit var googleSignIn: GoogleCredSignIn
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ComposeProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    googleSignIn = GoogleCredSignIn(this, GoogleCredSignIn.Constants.clientID)
 
 //                    val apiToken = "I7xPMj3ufiPJduZIhA9RDaf6711OXD4tML2Jrc2ZFDuiwD4y7MG1vGF7olBI"
 //                    val type = "TEST"
@@ -72,12 +79,29 @@ class MainActivity : ComponentActivity() {
 //                            println("API call failed: ${t.message}")
 //                        }
 //                    })
+                    Box(
+                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Button(
+                            onClick = {
+                                googleSignIn.googleLogin {
+                                    val tokenId = this.idToken ?: ""
+                                    Log.i("ComposeProject", tokenId)
+                                    Log.i("ComposeProject", this.givenName.toString())
+                                    Log.i("ComposeProject", this.id.toString())
+                                    Log.i("ComposeProject", this.displayName.toString())
+                                }
+                            }
+                        ) {
 
+                        }
+                    }
 //                    Greeting(
 //                        name = "Android",
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
-                    TranslationScreen()
+//                    TranslationScreen()
                 }
             }
         }
