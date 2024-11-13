@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.appsv.composeproject.cricket.CricketRankings
+import com.appsv.composeproject.mlkit.translation.TranslationScreen
 import com.appsv.composeproject.retrofit.retrofit
 import com.appsv.composeproject.ui.theme.ComposeProjectTheme
 import kotlinx.coroutines.launch
@@ -32,12 +33,11 @@ class MainActivity : ComponentActivity() {
             ComposeProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-//
 //                    val apiToken = "I7xPMj3ufiPJduZIhA9RDaf6711OXD4tML2Jrc2ZFDuiwD4y7MG1vGF7olBI"
 //                    val type = "TEST"
 //                    val gender = "men"
 //                    val call = apiService.getTeamRankings(type, gender, apiToken)
-
+//
 //                    LaunchedEffect(Unit) {
 //
 //                        for (i in call.body()?.data!!){
@@ -45,15 +45,16 @@ class MainActivity : ComponentActivity() {
 //
 //                            i.team.forEach {
 //                                Log.d("GGHJD", it.toString())
-//                            }
+//
+//   }
 //                        }
 //
 //                    }
-                    Retrofit.Builder()
-                        .baseUrl("https://cricket.sportmonks.com/api/v2.0/")  // Base URL of the API
-                        .addConverterFactory(GsonConverterFactory.create())   // Use Gson to parse JSON
-                        .build()
-
+//                    Retrofit.Builder()
+//                        .baseUrl("https://cricket.sportmonks.com/api/v2.0/")  // Base URL of the API
+//                        .addConverterFactory(GsonConverterFactory.create())   // Use Gson to parse JSON
+//                        .build()
+//
 //                    call.enqueue(object : Callback<CricketRankings> {
 //                        override fun onResponse(call: Call<CricketRankings>, response: Response<CricketRankings>) {
 //                            if (response.isSuccessful) {
@@ -72,10 +73,11 @@ class MainActivity : ComponentActivity() {
 //                        }
 //                    })
 
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+//                    Greeting(
+//                        name = "Android",
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+                    TranslationScreen()
                 }
             }
         }
@@ -97,3 +99,4 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+

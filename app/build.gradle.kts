@@ -66,4 +66,11 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     implementation(libs.androidx.core.splashscreen)
+
+    // translate ml kit
+    implementation("com.google.mlkit:translate:17.0.3")
+    val latest_version ="1.3.0"
+    implementation("androidx.credentials:credentials:$latest_version")
+    implementation("androidx.credentials:credentials-play-services-auth:$latest_version")
+    implementation("com.google.android.libraries.identity.googleid:googleid:$latest_version")
 }
