@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    googleSignIn = GoogleCredSignIn(this, GoogleCredSignIn.Constants.clientID)
+                    googleSignIn = GoogleCredSignIn(this, "648700745815-jk1780fl6qkn72flpt1hhs6k9j7d21ta.apps.googleusercontent.com")
 
 //                    val apiToken = "I7xPMj3ufiPJduZIhA9RDaf6711OXD4tML2Jrc2ZFDuiwD4y7MG1vGF7olBI"
 //                    val type = "TEST"
