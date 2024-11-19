@@ -20,8 +20,10 @@ import androidx.lifecycle.lifecycleScope
 import com.appsv.composeproject.cricket.CricketRankings
 import com.appsv.composeproject.google_sign_in.GoogleCredSignIn
 import com.appsv.composeproject.mlkit.translation.TranslationScreen
+import com.appsv.composeproject.pagination_practice.HomeScreen
 import com.appsv.composeproject.retrofit.retrofit
 import com.appsv.composeproject.ui.theme.ComposeProjectTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,8 +31,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
+//@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private lateinit var googleSignIn: GoogleCredSignIn
+//    private lateinit var googleSignIn: GoogleCredSignIn
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +42,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    googleSignIn = GoogleCredSignIn(this, "648700745815-jk1780fl6qkn72flpt1hhs6k9j7d21ta.apps.googleusercontent.com")
 
+// retrofit
 //                    val apiToken = "I7xPMj3ufiPJduZIhA9RDaf6711OXD4tML2Jrc2ZFDuiwD4y7MG1vGF7olBI"
 //                    val type = "TEST"
 //                    val gender = "men"
@@ -79,24 +83,29 @@ class MainActivity : ComponentActivity() {
 //                            println("API call failed: ${t.message}")
 //                        }
 //                    })
-                    Box(
-                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Button(
-                            onClick = {
-                                googleSignIn.googleLogin {
-                                    val tokenId = this.idToken ?: ""
-                                    Log.i("ComposeProject", tokenId)
-                                    Log.i("ComposeProject", this.givenName.toString())
-                                    Log.i("ComposeProject", this.id.toString())
-                                    Log.i("ComposeProject", this.displayName.toString())
-                                }
-                            }
-                        ) {
+// pagination
+                    HomeScreen()
+// google sign in
+//                    googleSignIn = GoogleCredSignIn(this, "648700745815-jk1780fl6qkn72flpt1hhs6k9j7d21ta.apps.googleusercontent.com")
 
-                        }
-                    }
+//                    Box(
+//                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        Button(
+//                            onClick = {
+//                                googleSignIn.googleLogin {
+//                                    val tokenId = this.idToken ?: ""
+//                                    Log.i("ComposeProject", tokenId)
+//                                    Log.i("ComposeProject", this.givenName.toString())
+//                                    Log.i("ComposeProject", this.id.toString())
+//                                    Log.i("ComposeProject", this.displayName.toString())
+//                                }
+//                            }
+//                        ) {
+//
+//                        }
+//                    }
 //                    Greeting(
 //                        name = "Android",
 //                        modifier = Modifier.padding(innerPadding)
