@@ -3,8 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
-    id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -76,33 +75,15 @@ dependencies {
     // splash api
     implementation(libs.androidx.core.splashscreen)
 
-
-    // translate ml kit
-    implementation("com.google.mlkit:translate:17.0.3")
-    val googleVersion ="1.1.1"
-    implementation("androidx.credentials:credentials:$googleVersion")
-    implementation("androidx.credentials:credentials-play-services-auth:$googleVersion")
-    implementation("com.google.android.libraries.identity.googleid:googleid:$googleVersion")
-
-
-    // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.50")
-    ksp("com.google.dagger:hilt-android-compiler:2.45")
-    ksp("androidx.hilt:hilt-compiler:1.2.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-
-    // Paging
-    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
-    implementation("androidx.paging:paging-compose:1.0.0-alpha18")
-
+    // koin
+    implementation("io.insert-koin:koin-android:3.2.0")
+    implementation("io.insert-koin:koin-androidx-compose:3.2.0")
 
     // Room
     implementation("androidx.room:room-ktx:2.5.1")
     ksp("androidx.room:room-compiler:2.5.1")
     implementation("androidx.room:room-paging:2.5.1")
 
-    // koin
-    implementation("io.insert-koin:koin-android:3.2.0")
-    implementation("io.insert-koin:koin-androidx-compose:3.2.0")
+
 
 }

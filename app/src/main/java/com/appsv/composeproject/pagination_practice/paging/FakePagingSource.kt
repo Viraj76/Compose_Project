@@ -15,7 +15,7 @@ class FakePagingSource @Inject constructor(private val apiService: AirlineAPI) :
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Data> {
-     return try{
+     return  try{
             val prev = params.key?:0
             val response = apiService.getAirlineResponse(page=prev,size=params.loadSize)
             if(response.isSuccessful){

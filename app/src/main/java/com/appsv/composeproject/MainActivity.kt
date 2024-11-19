@@ -24,6 +24,9 @@ import com.appsv.composeproject.pagination_practice.HomeScreen
 import com.appsv.composeproject.retrofit.retrofit
 import com.appsv.composeproject.ui.theme.ComposeProjectTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -111,6 +114,8 @@ class MainActivity : ComponentActivity() {
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
 //                    TranslationScreen()
+
+
                 }
             }
         }
