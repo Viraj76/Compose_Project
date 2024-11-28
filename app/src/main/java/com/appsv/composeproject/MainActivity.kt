@@ -5,39 +5,28 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
-import com.appsv.composeproject.cricket.CricketRankings
-import com.appsv.composeproject.google_sign_in.GoogleCredSignIn
-import com.appsv.composeproject.mlkit.translation.TranslationScreen
-import com.appsv.composeproject.pagination_practice.HomeScreen
-import com.appsv.composeproject.retrofit.retrofit
+import com.appsv.composeproject.scoring.data.room.Ball
+import com.appsv.composeproject.scoring.data.room.BallDao
+import com.appsv.composeproject.scoring.data.room.CricketDatabase
+import com.appsv.composeproject.scoring.data.room.DatabaseUtil
+import com.appsv.composeproject.scoring.presentation.BallByBallUI
 import com.appsv.composeproject.ui.theme.ComposeProjectTheme
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
-//@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-//    private lateinit var googleSignIn: GoogleCredSignIn
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,74 +35,17 @@ class MainActivity : ComponentActivity() {
             ComposeProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-// retrofit
-//                    val apiToken = "I7xPMj3ufiPJduZIhA9RDaf6711OXD4tML2Jrc2ZFDuiwD4y7MG1vGF7olBI"
-//                    val type = "TEST"
-//                    val gender = "men"
-//                    val call = apiService.getTeamRankings(type, gender, apiToken)
-//
-//                    LaunchedEffect(Unit) {
-//
-//                        for (i in call.body()?.data!!){
-//                            Log.d("GGHJD", i.team.size.toString())
-//
-//                            i.team.forEach {
-//                                Log.d("GGHJD", it.toString())
-//
-//   }
-//                        }
-//
-//                    }
-//                    Retrofit.Builder()
-//                        .baseUrl("https://cricket.sportmonks.com/api/v2.0/")  // Base URL of the API
-//                        .addConverterFactory(GsonConverterFactory.create())   // Use Gson to parse JSON
-//                        .build()
-//
-//                    call.enqueue(object : Callback<CricketRankings> {
-//                        override fun onResponse(call: Call<CricketRankings>, response: Response<CricketRankings>) {
-//                            if (response.isSuccessful) {
-//                                val rankings = response.body()?.data  // Access the list of rankings
-//                                println(rankings?.size)
-//                                rankings?.forEach {
-//                                    println("Team: ${it.team}, Rank: ${it.rating}, Points: ${it.points}")
-//                                }
-//                            } else {
-//                                println("Request failed with status code: ${response.code()}")
-//                            }
-//                        }
-//
-//                        override fun onFailure(call: Call<CricketRankings>, t: Throwable) {
-//                            println("API call failed: ${t.message}")
-//                        }
-//                    })
-// pagination
-                    HomeScreen()
-// google sign in
-//                    googleSignIn = GoogleCredSignIn(this, "648700745815-jk1780fl6qkn72flpt1hhs6k9j7d21ta.apps.googleusercontent.com")
 
-//                    Box(
-//                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
-//                        contentAlignment = Alignment.Center
-//                    ) {
-//                        Button(
-//                            onClick = {
-//                                googleSignIn.googleLogin {
-//                                    val tokenId = this.idToken ?: ""
-//                                    Log.i("ComposeProject", tokenId)
-//                                    Log.i("ComposeProject", this.givenName.toString())
-//                                    Log.i("ComposeProject", this.id.toString())
-//                                    Log.i("ComposeProject", this.displayName.toString())
-//                                }
-//                            }
-//                        ) {
-//
-//                        }
-//                    }
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                    TranslationScreen()
+
+                    LaunchedEffect(Unit) {
+
+                        val database = CricketDatabase.getDatabase(applicationContext)
+
+
+                        val ballDao = database.ballDao()
+                        addBallsToDatabase(ballDao,this)
+
+                    }
 
 
                 }
@@ -134,7 +66,107 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     ComposeProjectTheme {
-        Greeting("Android")
+//        Greeting("Android")
+
     }
 }
+
+@Composable
+fun BallByBallUIPreview() {
+    val mockBalls = listOf(
+        Ball(
+            matchId = 1,
+            innings = 1,
+            overNumber = 1,
+            ballNumber = 1,
+            bowlerId = 2,
+            batsmanId = 3,
+            nonStrikerId = 4,
+            runsScored = 4,
+            extrasType = null,
+            isWicket = false,
+            wicketType = "catch"
+        ),
+        Ball(
+            matchId = 1,
+            innings = 1,
+            overNumber = 1,
+            ballNumber = 2,
+            bowlerId = 2,
+            batsmanId = 3,
+            nonStrikerId = 4,
+            runsScored = 0,
+            extrasType = "wide",
+            isWicket = false,
+            wicketType = "bowled"
+        ),
+        Ball(
+            matchId = 1,
+            innings = 1,
+            overNumber = 1,
+            ballNumber = 3,
+            bowlerId = 2,
+            batsmanId = 3,
+            nonStrikerId = 4,
+            runsScored = 1,
+            extrasType = null,
+            isWicket = true,
+            wicketType = "bowled"
+        )
+    )
+    BallByBallUI(
+        balls = mockBalls,
+        onAddBallClicked = { /* Add Ball Logic */ }
+    )
+}
+
+
+fun addBallsToDatabase(ballDao: BallDao, coroutineScope: CoroutineScope) {
+    for (i in 1..1000) {
+        // Calculate over and ball number within the over
+        val overNumber = (i - 1) / 6 + 1
+        val ballNumber = (i - 1) % 6 + 1
+
+        // Generate random IDs for players
+        val bowlerId = (1..11).random()
+        val batsmanId = (1..11).random()
+        var nonStrikerId = (1..11).random()
+
+        // Ensure batsman and non-striker are not the same
+        while (batsmanId == nonStrikerId) {
+            nonStrikerId = (1..11).random()
+        }
+
+        // Randomize runs, extras, and wicket status
+        val runsScored = (0..6).random()
+        val isWicket = (0..10).random() == 0 // 1 in 10 chance of a wicket
+        val extrasType = if (runsScored == 0 && !isWicket) "Wide" else null
+        val wicketType = if (isWicket) "catch" else null
+
+        // Create Ball instance
+        val ball = Ball(
+            matchId = 1,
+            innings = 1,
+            overNumber = overNumber,
+            ballNumber = ballNumber,
+            bowlerId = bowlerId,
+            batsmanId = batsmanId,
+            nonStrikerId = nonStrikerId,
+            runsScored = runsScored,
+            extrasType = extrasType,
+            isWicket = isWicket,
+            wicketType = wicketType
+        )
+
+        coroutineScope.launch {
+            ballDao.insertBall(ball)
+        }
+    }
+
+}
+
+
+
+
+
 
