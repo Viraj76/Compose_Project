@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
-
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -84,6 +84,10 @@ dependencies {
     ksp("androidx.room:room-compiler:2.5.1")
     implementation("androidx.room:room-paging:2.5.1")
 
+
+    // navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
 
 }
