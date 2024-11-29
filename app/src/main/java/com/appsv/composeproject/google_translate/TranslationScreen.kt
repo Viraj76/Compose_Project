@@ -1,48 +1,33 @@
 package com.appsv.composeproject.google_translate
 
 import KeyboardAwareScreen
+import TranslationViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.runtime.Composable
-import android.util.Log
-import android.view.ViewTreeObserver
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.appsv.composeproject.R
-import com.appsv.composeproject.google_translate.LanguageSwitcherRow
-import com.appsv.composeproject.google_translate.rememberImeState
+import com.appsv.composeproject.google_translate.mvvm.TranslationRepository
 
-@Preview
+
 @Composable
-fun TranslationScreen(modifier: Modifier = Modifier) {
+fun TranslationScreen(
+    modifier: Modifier = Modifier,
+    navigateToHomeScreen : () -> Unit
+) {
     var translationMode by remember { mutableStateOf(true) }
     var isInputTextEmpty by remember { mutableStateOf(false) }
 
@@ -64,7 +49,9 @@ fun TranslationScreen(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { /* Back navigation */ }) {
+                IconButton(onClick = {
+                    navigateToHomeScreen()
+                }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Back",
@@ -132,7 +119,11 @@ fun TranslationScreen(modifier: Modifier = Modifier) {
 
 
             if(translationMode){
+                val repository = TranslationRepository()
+                val viewModel = TranslationViewModel(repository)
+                viewModel.fetchDownloadedLanguages()
                 KeyboardAwareScreen(
+                    viewModel = viewModel,
                     onTranslatedText = {
                         translationMode = false
                     },

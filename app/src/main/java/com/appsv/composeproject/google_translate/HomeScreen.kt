@@ -2,6 +2,8 @@ package com.appsv.composeproject.google_translate
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
@@ -13,11 +15,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -31,9 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.appsv.composeproject.R
 
-@Preview
+
 @Composable
-fun GoogleTranslateScreen() {
+fun HomeScreen(
+    navigateToTranslationScreen : () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -42,6 +44,7 @@ fun GoogleTranslateScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .statusBarsPadding()
         ) {
 
             Column(
@@ -103,7 +106,12 @@ fun GoogleTranslateScreen() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        modifier = Modifier.weight(0.8f),
+                        modifier = Modifier.weight(0.8f)
+                            .clickable(
+                                onClick = { navigateToTranslationScreen() },
+                                indication = null, // Disables the ripple effect
+                                interactionSource = remember { MutableInteractionSource() } // Keeps track of interactions
+                            ),
                         text = "Enter text",
                         style = TextStyle(
                             fontSize = 37.sp,

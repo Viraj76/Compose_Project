@@ -89,5 +89,10 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
+    // google
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
 
+
+    // ml kit
+    implementation("com.google.mlkit:translate:17.0.3")
 }

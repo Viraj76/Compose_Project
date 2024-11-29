@@ -1,27 +1,25 @@
 package com.appsv.composeproject
 
-import KeyboardAwareScreen
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.produceState
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.appsv.composeproject.google_translate.TranslationScreen
+import com.appsv.composeproject.google_translate.AutomatedGoogleSignIn
+import com.appsv.composeproject.google_translate.EmailAccountsScreenn
+import com.appsv.composeproject.google_translate.navigation.SetUpNavigation
 import com.appsv.composeproject.scoring.data.room.Ball
 import com.appsv.composeproject.scoring.data.room.BallDao
-import com.appsv.composeproject.scoring.data.room.CricketDatabase
-import com.appsv.composeproject.scoring.data.room.DatabaseUtil
 import com.appsv.composeproject.scoring.presentation.BallByBallUI
 import com.appsv.composeproject.ui.theme.ComposeProjectTheme
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +30,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(
+                Color.Black.toArgb()
+            )
+        )
         setContent {
             ComposeProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -49,9 +51,15 @@ class MainActivity : ComponentActivity() {
 //
 //                    }
 
-                    TranslationScreen()
-
-
+                    SetUpNavigation()
+//                    EmailAccountsScreenn()
+//                    val context = LocalContext.current
+//                    CustomGoogleSignInPicker(context)
+//                    val context = LocalContext.current
+//
+//                    AutomatedGoogleSignIn(context = context) { selectedEmail ->
+//                        Log.d("SelectedEmail", "Selected Account Email: $selectedEmail")
+//                    }
                 }
             }
         }
