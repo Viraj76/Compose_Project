@@ -1,5 +1,6 @@
 package com.appsv.composeproject
 
+import KeyboardAwareScreen
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -16,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.appsv.composeproject.google_translate.TranslationScreen
 import com.appsv.composeproject.scoring.data.room.Ball
 import com.appsv.composeproject.scoring.data.room.BallDao
 import com.appsv.composeproject.scoring.data.room.CricketDatabase
@@ -36,16 +38,18 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
 
+//
+//                    LaunchedEffect(Unit) {
+//
+//                        val database = CricketDatabase.getDatabase(applicationContext)
+//
+//
+//                        val ballDao = database.ballDao()
+//                        addBallsToDatabase(ballDao,this)
+//
+//                    }
 
-                    LaunchedEffect(Unit) {
-
-                        val database = CricketDatabase.getDatabase(applicationContext)
-
-
-                        val ballDao = database.ballDao()
-                        addBallsToDatabase(ballDao,this)
-
-                    }
+                    TranslationScreen()
 
 
                 }
