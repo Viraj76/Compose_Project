@@ -10,11 +10,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCompositionContext
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.appsv.composeproject.google_sign_in.GoogleAuthenticator
+import com.appsv.composeproject.google_sign_in.SignInScreen
 import com.appsv.composeproject.google_translate.AutomatedGoogleSignIn
 import com.appsv.composeproject.google_translate.EmailAccountsScreenn
 import com.appsv.composeproject.google_translate.navigation.SetUpNavigation
@@ -51,7 +56,7 @@ class MainActivity : ComponentActivity() {
 //
 //                    }
 
-                    SetUpNavigation()
+//                    SetUpNavigation()
 //                    EmailAccountsScreenn()
 //                    val context = LocalContext.current
 //                    CustomGoogleSignInPicker(context)
@@ -60,6 +65,20 @@ class MainActivity : ComponentActivity() {
 //                    AutomatedGoogleSignIn(context = context) { selectedEmail ->
 //                        Log.d("SelectedEmail", "Selected Account Email: $selectedEmail")
 //                    }
+                    val scope = rememberCoroutineScope()
+                    SignInScreen(){
+
+                        val googleAuthenticator = GoogleAuthenticator(this)
+                        scope.launch  {
+                            googleAuthenticator.authenticate().collect{credential->
+                                if (credential != null) {
+                                    Log.d("Detailsss" , credential.id)
+                                } else {
+                                }
+                            }}
+                    }
+
+
                 }
             }
         }

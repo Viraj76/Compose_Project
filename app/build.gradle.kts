@@ -95,4 +95,11 @@ dependencies {
 
     // ml kit
     implementation("com.google.mlkit:translate:17.0.3")
+
+    // google sign in
+    val googleVersion ="1.1.1"
+    implementation("androidx.credentials:credentials:$googleVersion")
+    implementation("androidx.credentials:credentials-play-services-auth:$googleVersion")
+    implementation("com.google.android.libraries.identity.googleid:googleid:$googleVersion")
+
 }
