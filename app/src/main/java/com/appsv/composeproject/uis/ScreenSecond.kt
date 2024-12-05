@@ -36,16 +36,8 @@ import com.appsv.composeproject.ui.theme.ColorSecondaryVariant
 import com.appsv.composeproject.ui.theme.LightGrayishBlue
 
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            RecordExpenseScreen()
-        }
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
 fun RecordExpenseScreen() {
     var isExpense by remember { mutableStateOf(true) }
@@ -87,6 +79,7 @@ fun RecordExpenseScreen() {
                 // Toggle between Expense and Income
                 ExpenseIncomeToggle()
 
+                var show by remember { mutableStateOf(false) }
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Box(
@@ -102,7 +95,7 @@ fun RecordExpenseScreen() {
                             trailingIcon = {
                                 IconButton(
                                     onClick = {
-
+                                        show = true
                                     }
                                 ) {
                                     Icon(
@@ -114,6 +107,16 @@ fun RecordExpenseScreen() {
                             }
                         )
                     }
+                }
+                if(show){
+                    DatePickerModal(
+                        onDateSelected = {
+
+                        },
+                        onDismiss = {
+
+                        }
+                    )
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 Box(
