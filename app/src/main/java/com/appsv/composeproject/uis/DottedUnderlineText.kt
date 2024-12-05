@@ -44,7 +44,7 @@ fun UnderlinedText(
                 .padding(horizontal = 8.dp, vertical = 4.dp)
         ) {
             Text(
-                text = text,
+                text = "₹ $text",
                 color = color,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
